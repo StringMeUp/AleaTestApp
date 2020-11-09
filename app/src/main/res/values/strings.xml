@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">AleaTestApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="user_id">user_id</string>
+    <string name="id">id</string>
+    <string name="title_placeholder">title_text_place_holder</string>
+    <string name="body_text">body_text_place_holder</string>
+    <string name="post_id">post_id</string>
+    <string name="name_placeholder">name_place_holder</string>
+    <string name="body_placeholder">body_placeholder</string>
+    <string name="e_mail_placeholder">e_mail_placeholder</string>
+    <string name="load_images">Load Images</string>
+    <string name="alea">Alea</string>
+    <string name="title_text">title_text</string>
+    <string name="album_id">Album: </string>
+    <string name="album_id_text_view">Album Id:</string>
+    <string name="photo_id">Photo: </string>
+    <string name="loading_more">Loading: 20 new items.</string>
+</resources>
