@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //implements onClickEvent interface
-public class MainActivity extends AppCompatActivity implements PostsAdapter.ClickEvent{
+public class MainActivity extends AppCompatActivity implements PostsAdapter.OnClickListener {
 
     private ActivityMainBinding mainBinding;
     private MainViewModel mainViewModel;
@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements PostsAdapter.Clic
         mainBinding.setViewModel(mainViewModel);
         //Set lifeCycle Owner
         mainBinding.setLifecycleOwner(this);
+        //Setting adapter and layoutManger only once on onCreate
         showPosts();
     }
 
@@ -53,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements PostsAdapter.Clic
         //Initialize adapter and layoutManager
         postsAdapter = new PostsAdapter(new ArrayList<>(), this);
         layoutManager = new LinearLayoutManager(this);
+        //setLayout manager only once in onCreate
+        mainBinding.postsRecyclerView.setLayoutManager(layoutManager);
         //Listen for data changes once it has been received
         observePostsLiveData();
     }
@@ -63,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements PostsAdapter.Clic
             public void onChanged(List<Posts> posts) {
                 if (posts != null) {
                     postsAdapter.updateList((ArrayList<Posts>) posts);
-                    mainBinding.postsRecyclerView.setLayoutManager(layoutManager);
                     mainBinding.postsRecyclerView.setAdapter(postsAdapter);
                 }
             }

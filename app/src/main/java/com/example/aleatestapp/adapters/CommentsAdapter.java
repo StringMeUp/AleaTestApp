@@ -16,10 +16,10 @@ import java.util.ArrayList;
 
 public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentsViewHolder> {
 
-    private ArrayList<Comments> postsModelArrayList;
+    private ArrayList<Comments> commentsArrayList;
 
     public CommentsAdapter(ArrayList<Comments> comments) {
-        this.postsModelArrayList = comments;
+        this.commentsArrayList = comments;
     }
 
     public static class CommentsViewHolder extends RecyclerView.ViewHolder {
@@ -53,18 +53,18 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
     @Override
     public void onBindViewHolder(@NonNull CommentsViewHolder holder, int position) {
         //Getting position of each item.
-        holder.bind(postsModelArrayList.get(position));
+        holder.bind(commentsArrayList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return postsModelArrayList.size();
+        return commentsArrayList.size();
     }
 
     //Updating the list in the adapter.
     public void updateList(ArrayList<Comments> updatedList) {
-        postsModelArrayList.clear();
-        postsModelArrayList.addAll(updatedList);
+        commentsArrayList.clear();
+        commentsArrayList.addAll(updatedList);
     }
 }
 

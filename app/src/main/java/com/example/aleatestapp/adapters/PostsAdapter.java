@@ -17,21 +17,21 @@ import java.util.ArrayList;
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsViewHolder> {
 
     private ArrayList<Posts> postsArrayList;
-    public ClickEvent clickEvent;
+    public OnClickListener onClickListener;
 
-    public PostsAdapter(ArrayList<Posts> posts, ClickEvent clickEvent) {
+    public PostsAdapter(ArrayList<Posts> posts, OnClickListener onClickListener) {
         this.postsArrayList = posts;
-        this.clickEvent = clickEvent;
+        this.onClickListener = onClickListener;
     }
 
     public static class PostsViewHolder extends RecyclerView.ViewHolder {
         public PostsCardBinding postsCardBinding;
-        public ClickEvent clickEvent;
+        public OnClickListener onClickListener;
 
-        private PostsViewHolder(PostsCardBinding binding, ClickEvent clickEvent) {
+        private PostsViewHolder(PostsCardBinding binding, OnClickListener onClickListener) {
             super(binding.getRoot());
             this.postsCardBinding = binding;
-            this.clickEvent = clickEvent;
+            this.onClickListener = onClickListener;
         }
 
         //Referencing the auto-generated dataBinding class and inflating the view.
@@ -42,7 +42,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsViewHol
             postsCardBinding.title.setText(model.getTitle().toUpperCase());
             postsCardBinding.body.setText(model.getBody());
             //On click event will trigger the interface and obtain userId that is further used in the activity that implements the interface.
-            itemView.setOnClickListener(v -> clickEvent.setClickListener(model.getUserId()));
+            itemView.setOnClickListener(v -> onClickListener.setClickListener(model.getUserId()));
         }
     }
 
@@ -51,7 +51,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsViewHol
     public PostsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         PostsCardBinding cardBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
                 R.layout.posts_card, parent, false);
-        return new PostsViewHolder(cardBinding, clickEvent);
+        return new PostsViewHolder(cardBinding, onClickListener);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsViewHol
     }
 
     //Interface callback that will be implemented in the activity.
-    public interface ClickEvent {
+    public interface OnClickListener {
         void setClickListener(int id);
     }
 }
