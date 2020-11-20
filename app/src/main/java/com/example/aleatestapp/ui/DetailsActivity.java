@@ -1,8 +1,6 @@
 package com.example.aleatestapp.ui;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,16 +15,13 @@ import com.example.aleatestapp.adapters.AlbumAdapter;
 import com.example.aleatestapp.adapters.CommentsAdapter;
 import com.example.aleatestapp.data.Comments;
 import com.example.aleatestapp.databinding.ActivityDetailsBinding;
-import com.example.aleatestapp.paging.AlbumDataSource;
 import com.example.aleatestapp.util.Constants;
 import com.example.aleatestapp.util.MyApplication;
 import com.example.aleatestapp.util.NetworkConnection;
 
 import java.util.ArrayList;
 
-import okhttp3.ResponseBody;
-
-public class DetailsActivity extends AppCompatActivity implements AlbumDataSource.ErrorHandler {
+public class DetailsActivity extends AppCompatActivity {
     //viewModel and binding
     private DetailsViewModel viewModel;
     private ActivityDetailsBinding activityBinding;
@@ -97,16 +92,16 @@ public class DetailsActivity extends AppCompatActivity implements AlbumDataSourc
     }
 
     private void observeAlbumPhotos() {
-       if(NetworkConnection.isNetworkAvailable(this)){
-           viewModel.albumList.observe(this, items -> {
-               //In case of any changes update the adapter
-               if (items != null) {
-                   albumAdapter.submitList(items);
-               }
-           });
-       }else{
-           Toast.makeText(this, Constants.NOT_CONNECTED, Toast.LENGTH_SHORT).show();
-       }
+        if (NetworkConnection.isNetworkAvailable(this)) {
+            viewModel.albumList.observe(this, items -> {
+                //In case of any changes update the adapter
+                if (items != null) {
+                    albumAdapter.submitList(items);
+                }
+            });
+        } else {
+            Toast.makeText(this, Constants.NOT_CONNECTED, Toast.LENGTH_SHORT).show();
+        }
     }
 
     //Observe ZeroItemsLoaded case and update user
@@ -116,33 +111,5 @@ public class DetailsActivity extends AppCompatActivity implements AlbumDataSourc
                 Toast.makeText(MyApplication.applicationContext, Constants.ZERO_ITEMS_LOADED, Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    //Handle errors and update user
-    @Override
-    public void getErrorMessageOnFailure(String methodName, String errorMessage, Throwable t) {
-        Toast.makeText(this, Constants.TOAST_ERROR, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void getResponseCode(String methodName, int responseCode, ResponseBody errorBody) {
-        Toast.makeText(this, Constants.TOAST_ERROR, Toast.LENGTH_SHORT).show();
-        switch (responseCode) {
-            case Constants.BAD_REQUEST:
-                Toast.makeText(this, Constants.BAD_REQUEST_MESSAGE, Toast.LENGTH_SHORT).show();
-                break;
-            case Constants.NOT_AUTHORIZED:
-                Toast.makeText(this, Constants.NOT_AUTHORIZED_MESSAGE, Toast.LENGTH_SHORT).show();
-                break;
-            case Constants.NOT_FOUND:
-                Toast.makeText(this, Constants.NOT_FOUND_MESSAGE, Toast.LENGTH_SHORT).show();
-                break;
-            case Constants.REQUEST_TIMEOUT:
-                Toast.makeText(this, Constants.REQUEST_TIMEOUT_MESSAGE, Toast.LENGTH_SHORT).show();
-                break;
-            case Constants.SERVICE_UNAVAILABLE:
-                Toast.makeText(this, Constants.SERVICE_UNAVAILABLE_MESSAGE, Toast.LENGTH_SHORT).show();
-                break;
-        }
     }
 }
